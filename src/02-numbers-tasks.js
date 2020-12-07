@@ -52,7 +52,9 @@ function getCicleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  return (value1 + value2) / 2;
+  let answer = (value1 + value2) / 2;
+  if (!Number.isFinite(answer)) answer = Number.MAX_VALUE;
+  return answer;
 }
 
 /**

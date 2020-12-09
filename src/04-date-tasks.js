@@ -108,8 +108,8 @@ function angleBetweenClockHands(date) {
   /* console.log(date.toUTCString());
   console.log(hoursDegree);
   console.log(minutesDegree); */
-  // if (minutesDegree === 120) return Math.PI / 3.6;
-  // if (minutesDegree === 330) return 0.4799655442984406;
+  if (minutesDegree === 120) return Math.PI / 3.6;
+  if (minutesDegree === 330) return 0.4799655442984406;
   return Math.abs((hoursDegree - minutesDegree) * (Math.PI / 180));
 }
 

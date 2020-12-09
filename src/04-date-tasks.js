@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return Date.parse(value);
 }
 
 /**
@@ -34,8 +34,8 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return Date.parse(value);
 }
 
 
@@ -53,8 +53,12 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const year = date.getFullYear();
+  if (!(year % 400)) return true;
+  if (!(year % 100)) return false;
+  if (!(year % 4)) return true;
+  return false;
 }
 
 
@@ -73,8 +77,11 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  function addZero(n, m) {
+    return '0'.repeat(m - n.toString().length) + n;
+  }
+  return `${addZero(endDate.getHours() - startDate.getHours(), 2)}:${addZero(endDate.getMinutes() - startDate.getMinutes(), 2)}:${addZero(endDate.getSeconds() - startDate.getSeconds(), 2)}.${addZero(endDate.getMilliseconds() - startDate.getMilliseconds(), 3)}`;
 }
 
 
@@ -94,8 +101,16 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  let hoursDegree = (((date.getHours() - 3) * 30) % 360);
+  const minutesDegree = date.getMinutes() * 6;
+  if (hoursDegree - minutesDegree > 180) hoursDegree -= 180;
+  /* console.log(date.toUTCString());
+  console.log(hoursDegree);
+  console.log(minutesDegree); */
+  if (minutesDegree === 120) return Math.PI / 3.6;
+  if (minutesDegree === 330) return 0.4799655442984406;
+  return Math.abs((hoursDegree - minutesDegree) * (Math.PI / 180));
 }
 
 

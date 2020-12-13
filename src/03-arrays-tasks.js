@@ -236,7 +236,7 @@ function toArrayOfSquares(arr) {
  */
 function getMovingSum(arr) {
   return arr.map((el, index) => el
-  + arr.slice(0, index).reduce((acc, element) => acc + element, 0));
+  + arr.slice(0, index).ц((acc, element) => acc + element, 0));
 }
 
 /**

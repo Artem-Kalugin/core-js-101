@@ -239,8 +239,25 @@ function getRectangleString(height, width) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lower = 'abcdefghijklmnopqrstuvwxyz';
+  function getOffset(letter) {
+    if ((upper.indexOf(letter) !== -1 || lower.indexOf(letter) !== -1) && letter !== ' ') {
+      let curr;
+      let index;
+      if (upper.indexOf(letter) !== -1) {
+        curr = upper;
+        index = upper.indexOf(letter);
+      }
+      if (lower.indexOf(letter) !== -1) {
+        curr = lower;
+        index = lower.indexOf(letter);
+      }
+      return curr[(index + 13) % 26];
+    } return letter;
+  }
+  return str.split('').map((el) => getOffset(el)).join('');
 }
 
 /**
@@ -285,8 +302,19 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  function getNum(n) {
+    if (n === 'J') return 10;
+    if (n === 'Q') return 11;
+    if (n === 'K') return 12;
+    if (n === '♠') return 39;
+    if (n === '♥') return 26;
+    if (n === '♦') return 13;
+    if (n === '♣') return 0;
+    if (n === 'A') return 0;
+    return n - 1;
+  }
+  return getNum(value.slice(0, -1)) + getNum(value.slice(-1));
 }
 
 

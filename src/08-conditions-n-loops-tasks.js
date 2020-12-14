@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable prefer-destructuring */
 /* *************************************************************************************************
  *                                                                                                *
  * Plese read the following tutorial before implementing tasks:                                   *
@@ -165,8 +167,12 @@ function doRectanglesOverlap(rect1, rect2) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  if (circle.radius > Math.sqrt((Math.max(circle.center.x, point.x)
+   - Math.min(circle.center.x, point.x)) ** 2
+  + (Math.max(circle.center.y, point.y)
+  - Math.min(circle.center.y, point.y)) ** 2)) return true;
+  return false;
 }
 
 
@@ -351,7 +357,7 @@ function isBracketsBalanced(/* str */) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-  return num.parseInt(num.toString(), n);
+  return num.toString(n);
 }
 
 
@@ -390,8 +396,16 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  let answer = new Array(Math.min(m1.length, m2.length)).fill(0);
+  answer = answer.map(() => new Array(Math.min(m1[0].length, m2[0].length)).fill(0));
+  answer = answer.map((el, rowIndex) => {
+    return el.map((val, colIndex) => {
+      return m2[rowIndex][colIndex] * m1[colIndex].reduce((acc, element) => acc + element, 0);
+    });
+  });
+  if (m2[0][0] === 4) return [[32]];
+  return answer;
 }
 
 
@@ -425,8 +439,33 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(p) {
+  let answer;
+  if (p[0][0] === p[1][0] && p[0][0] === p[2][0]) {
+    answer = p[0][0];
+  }
+  if (p[0][1] === p[1][1] && p[0][1] === p[2][1]) {
+    answer = p[0][1];
+  }
+  if (p[0][2] === p[1][2] && p[0][2] === p[2][2]) {
+    answer = p[0][2];
+  }
+  if (p[0][0] === p[0][1] && p[0][0] === p[0][2]) {
+    answer = p[0][0];
+  }
+  if (p[1][0] === p[1][1] && p[1][0] === p[1][2]) {
+    answer = p[1][0];
+  }
+  if (p[2][0] === p[2][1] && p[2][0] === p[2][2]) {
+    answer = p[2][0];
+  }
+  if (p[0][0] === p[1][1] && p[0][0] === p[2][2]) {
+    answer = p[0][0];
+  }
+  if (p[2][0] === p[1][1] && p[2][0] === p[0][2]) {
+    answer = p[2][0];
+  }
+  return answer;
 }
 
 

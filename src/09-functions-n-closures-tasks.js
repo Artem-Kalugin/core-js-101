@@ -1,3 +1,6 @@
+/* eslint-disable prefer-template */
+/* eslint-disable no-new-func */
+/* eslint-disable no-nested-ternary */
 /* *********************************************************************************************
  *                                                                                             *
  * Plese read the following tutorial before implementing tasks:                                *
@@ -62,8 +65,16 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...args) {
+  return (x) => {
+    let answer = 0;
+    if (args.length != null) {
+      args.forEach((el, index) => {
+        answer += (el * (x ** (args.length - index - 1)));
+      });
+    } else answer = null;
+    return answer;
+  };
 }
 
 
@@ -81,8 +92,17 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  const cached = new Map();
+  return (...args) => {
+    const key = JSON.stringify(args);
+    if (!(cached.has(key))) {
+      // eslint-disable-next-line prefer-spread
+      const result = func.apply(null, args);
+      cached.set(key, result);
+    }
+    return cached.get(key);
+  };
 }
 
 
@@ -101,7 +121,7 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
+function retry(func, attempts) {
   throw new Error('Not implemented');
 }
 

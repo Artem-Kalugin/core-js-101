@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-loop-func */
 /* eslint-disable arrow-body-style */
 /* eslint-disable prefer-destructuring */
 /* *************************************************************************************************
@@ -331,8 +333,15 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str, bracketsConfig = [['[', ']'], ['(', ')'], ['{', '}'], ['<', '>']]) {
+  let prev;
+  do {
+    prev = str;
+    bracketsConfig.forEach((element) => {
+      str = str.replace(new RegExp(`\\${element[0]}\\${element[1]}`, 'g'), '');
+    });
+  } while (str !== prev);
+  return str === '';
 }
 
 
